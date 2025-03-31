@@ -4,17 +4,22 @@ interface TransactionListProps {
   transactions: Transaction[];
 }
 
-const TransactionList = ({ transactions }: TransactionListProps) => {
+const TransactionList = ({ transactions }: { transactions: Transaction[] }) => {
+  console.log("Fetched transactions:", transactions);
+  if (transactions.length === 0) {
+    return <p>No transactions found for this account.</p>;
+  }
+
   return (
-    <div className="space-y-2">
+    <ul>
       {transactions.map((transaction) => (
-        <div key={transaction.id} className="p-4 border rounded-lg">
-          <p>{transaction.description}</p>
-          <p className="text-gray-600">Amount: {transaction.amount}</p>
-          <p className="text-gray-600">Category: {transaction.category}</p>
-        </div>
+        <li key={transaction.uuid ?? transaction.id}>
+          {" "}
+          {/* Use `id` or another valid property */}
+          {transaction.description} - {transaction.amount}
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 

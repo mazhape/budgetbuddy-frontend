@@ -4,18 +4,42 @@ import TransactionList from "../components/TransactionList";
 import { fetchTransactions } from "../utils/api";
 import { useEffect, useState } from "react";
 import { Transaction } from "../types/types";
+import MonthlySpendingChart from "@/components/MonthlySpendingChart";
+import CashFlowAnalysis from "@/components/CashFlowAnalysis";
+import SpendingAlerts from "@/components/SpendingAlerts";
+import SavingsRateDisplay from "@/components/SavingsRateDisplay";
+import TopSpendingCategoriesChart from "@/components/TopSpendingCategoriesChart";
+import InvestmentInsights from "@/components/InvestmentInsights";
+import BudgetTracker from "@/components/BudgetTracker";
+import FinancialHealthScore from "@/components/FinancialHealthScore";
+import DebtManagement from "@/components/DebtManagement";
 
 const Dashboard = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const accountId = "user123"; // Replace with the actual account ID
+  const accountId = "3353431574710166878182963"; // Replace with the actual account ID
+  const userId = "123"; // Replace with the actual user ID
 
   useEffect(() => {
     const loadTransactions = async () => {
-      const data = await fetchTransactions(accountId); // Pass accountId here
-      setTransactions(data);
+      console.log("Starting to load transactions...");
+      try {
+        const data = await fetchTransactions(accountId);
+        console.log("Account ID:", accountId);
+        console.log("Fetched data:", data);
+
+        if (data.transactions) {
+          console.log("Setting transactions in state...");
+          setTransactions(data.transactions);
+        } else {
+          console.log("No transactions found, resetting state...");
+          setTransactions([]);
+        }
+      } catch (error) {
+        console.error("Error loading transactions:", error);
+      }
     };
     loadTransactions();
-  }, [accountId]); // Add accountId to the dependency array
+  }, [accountId]);
 
   return (
     <div>
@@ -30,6 +54,48 @@ const Dashboard = () => {
           <div>
             <h2 className="text-xl font-semibold mb-2">Recent Transactions</h2>
             <TransactionList transactions={transactions} />
+          </div>
+          {/* Monthly Spending Breakdown */}
+          <div className="mb-8">
+            <MonthlySpendingChart accountId={accountId} />
+          </div>
+          {/* Top Spending Categories */}
+          <div className="mb-8">
+            <TopSpendingCategoriesChart accountId={accountId} />
+          </div>
+
+          {/* Savings Rate */}
+          <div className="mb-8">
+            <SavingsRateDisplay accountId={accountId} />
+          </div>
+
+          {/* Spending Alerts */}
+          <div className="mb-8">
+            <SpendingAlerts accountId={accountId} />
+          </div>
+
+          {/* Cash Flow Analysis */}
+          <div className="mb-8">
+            <CashFlowAnalysis accountId={accountId} />
+          </div>
+          {/* Financial Health Score */}
+          <div className="mb-8">
+            <FinancialHealthScore accountId={accountId} />
+          </div>
+
+          {/* Customizable Budgets*/}
+          <div className="mb-8">
+            <BudgetTracker userId={userId} />
+          </div>
+
+          {/* Investment Insights */}
+          <div className="mb-8">
+            <InvestmentInsights accountId={accountId} />
+          </div>
+
+          {/* Debt Management */}
+          <div className="mb-8">
+            <DebtManagement accountId={accountId} />
           </div>
         </div>
       </div>

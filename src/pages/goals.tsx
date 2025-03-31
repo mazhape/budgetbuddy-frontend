@@ -1,13 +1,17 @@
+import { useState, FormEvent, ChangeEvent } from "react";
 import Navbar from "../components/Navbar";
+import GoalTracker from "@/components/GoalTracker";
+import GoalForm from "@/components/GoalForm";
 
+// Goals.tsx
 const Goals = () => {
+  const userId = "3353431574710166878182963"; // Replace with actual user ID
+
   return (
-    <div>
-      <Navbar />
-      <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">Goals</h1>
-        {/* Add goal tracking functionality here */}
-      </div>
+    <div className="container mx-auto p-4">
+      <GoalTracker userId={userId.toString()} />{" "}
+      {/* Convert number to string */}
+      <GoalForm />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   LineChart,
   Line,
@@ -8,13 +9,20 @@ import {
   Legend,
 } from "recharts";
 
-const data = [
+// Define the data type
+interface DataPoint {
+  name: string;
+  income: number;
+  expenses: number;
+}
+
+const data: DataPoint[] = [
   { name: "Jan", income: 4000, expenses: 2400 },
   { name: "Feb", income: 3000, expenses: 1398 },
   { name: "Mar", income: 2000, expenses: 9800 },
 ];
 
-const Chart = () => {
+const Chart: React.FC = () => {
   return (
     <LineChart width={600} height={300} data={data}>
       <CartesianGrid strokeDasharray="3 3" />
